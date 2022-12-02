@@ -1,6 +1,6 @@
 module Day1 where
 
-import Data.List
+import Data.List ( sort )
 
 splitLines :: String -> [String]
 splitLines "" = []
@@ -15,10 +15,11 @@ split xs = start : split (drop 1 rest)
         rest = dropWhile (/="") xs
 
 top :: Int -> [Int] -> [Int]
-top n = (take n) . reverse . sort
+top n = take n . reverse . sort
 
+main :: IO ()
 main = do
     s <- readFile "day-1-input.txt"
-    let sums = (map sum) . split . splitLines $ s
-    print (sum . (top 1) $ sums)
-    print (sum . (top 3) $ sums)
+    let sums = map sum . split . splitLines $ s
+    print (sum . top 1 $ sums)
+    print (sum . top 3 $ sums)
